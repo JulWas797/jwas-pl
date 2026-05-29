@@ -1,0 +1,100 @@
+@import "https://www.nerdfonts.com/assets/css/webfont.css";
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap");
+
+:root {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color: rgb(255, 255, 255);
+  background-color: #000000;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  padding: 2rem;
+  text-align: center;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+a {
+  font-weight: 500;
+  color: white;
+  text-decoration: inherit;
+}
+
+p {
+  transition: all .1s ease-in-out;
+}
+
+p.color {
+  font-weight: 700;
+}
+
+p:hover.expand {
+  letter-spacing: 0.2em;
+  font-weight: 700;
+  color: #bababa;
+}
+
+p:hover.color {
+  color: #bababa;
+}
+
+h1 {
+  font-weight: 400;
+  font-size: 3.4em;
+  line-height: 1.1;
+  margin-bottom: 0;
+}
+
+.pride {
+  background: linear-gradient(
+    to right,
+    #e40303 0%,
+    #ff8c00 20%,
+    #ffed00 40%,
+    #008026 60%,
+    #004dff 80%,
+    #750787 100%
+  );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent;
+  background-size: 500% auto;
+  animation: textShine 5s ease-in-out infinite alternate;
+}
+
+h3 {
+  font-weight: 500;
+  margin-bottom: 3em;
+}
+
+@keyframes textShine {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+footer {
+  margin-top: 3rem;
+  color: #555;
+  font-size: 0.8rem;
+}
