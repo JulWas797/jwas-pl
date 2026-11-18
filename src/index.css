@@ -1,66 +1,134 @@
-@import "https://www.nerdfonts.com/assets/css/webfont.css";
-@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap");
+@font-face {
+  font-family: 'HelveticaWeb';
+  src:
+    local('Helvetica Neue'),
+    local('HelveticaNeue'),
+    local('Helvetica'),
+    url('https://cdn.fontshare.com/wf/HJHZ26OECMTXRH7JXPFC7EVIHDSLT2RA/LJRNLR7WCPF3PY3SZ7B2LHNUTQMFNCHL/4MCJYGQDIOOXHWSIIB2OYNDBEALJSOGN.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 14px;
-  line-height: 1.5;
-  font-weight: 400;
+  --bg: #000000;
+  --fg: #ffffff;
+  --muted: #808080;
 
-  color: rgb(255, 255, 255);
-  background-color: #000000;
+  --font-sans: 'Helvetica Neue', Helvetica, 'HelveticaWeb', Arial, sans-serif;
 
+  color: var(--fg);
+  background-color: var(--bg);
+  font-family: var(--font-sans);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#root {
-  padding: 2rem;
-  text-align: center;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
+html,
 body {
   margin: 0;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding: 0;
+  min-height: 100%;
+  background-color: var(--bg);
+  color: var(--fg);
+  overflow-x: hidden;
 }
 
 a {
-  font-weight: 500;
-  color: white;
-  text-decoration: inherit;
+  color: inherit;
+  text-decoration: none;
 }
 
-p {
-  transition: all .1s ease-in-out;
+.vapor-bg {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+  -webkit-mask-image: radial-gradient(ellipse 38% 28% at 50% 45%, transparent 20%, #000 100%);
+  mask-image: radial-gradient(ellipse 38% 28% at 50% 45%, transparent 20%, #000 100%);
 }
 
-p.color {
+.page {
+  position: relative;
+  z-index: 1;
+  min-height: 100svh;
+  padding: 2rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.main {
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.wordmark-heading {
+  margin: 0;
+  font-size: clamp(1.4rem, 5.2vw, 3.8rem);
   font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+  white-space: nowrap;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
 }
 
-p:hover.expand {
-  letter-spacing: 0.2em;
-  font-weight: 700;
-  color: #bababa;
+@media (max-width: 640px) {
+  .page {
+    padding:
+      max(1.5rem, env(safe-area-inset-top))
+      max(1.25rem, env(safe-area-inset-right))
+      max(1.5rem, env(safe-area-inset-bottom))
+      max(1.25rem, env(safe-area-inset-left));
+  }
+
+  .wordmark-heading {
+    max-width: 100%;
+    font-size: clamp(1.2rem, 5vw, 3.8rem);
+  }
+
+  .link-item {
+    padding: 0.2rem 0.4rem;
+  }
 }
 
-p:hover.color {
-  color: #bababa;
+.wordmark {
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+  padding: 0.15em 0;
+  margin: -0.15em 0;
+  background-color: #000000;
+  color: #ffffff;
+  isolation: isolate;
+  overflow: hidden;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
-h1 {
-  font-weight: 400;
-  font-size: 3.4em;
-  line-height: 1.1;
-  margin-bottom: 0;
-}
-
-.pride {
+.wordmark::after {
+  content: '';
+  position: absolute;
+  inset: 0;
   background: linear-gradient(
     to right,
     #e40303 0%,
@@ -70,18 +138,15 @@ h1 {
     #004dff 80%,
     #750787 100%
   );
-
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-fill-color: transparent;
   background-size: 500% auto;
   animation: textShine 5s ease-in-out infinite alternate;
+  mix-blend-mode: multiply;
+  pointer-events: none;
 }
 
-h3 {
-  font-weight: 500;
-  margin-bottom: 3em;
+.wordmark:focus-visible {
+  outline: 1px solid var(--fg);
+  outline-offset: 6px;
 }
 
 @keyframes textShine {
@@ -93,8 +158,144 @@ h3 {
   }
 }
 
-footer {
+.wm-root {
+  display: inline-block;
+}
+
+.wm-ext {
+  display: inline-grid;
+  grid-template-columns: 0fr;
+  transition: grid-template-columns 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.wm-ext-inner {
+  overflow: hidden;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.28s ease;
+}
+
+.wordmark:hover .wm-ext,
+.wordmark:focus-visible .wm-ext,
+.wordmark.is-expanded .wm-ext {
+  grid-template-columns: 1fr;
+}
+
+.wordmark:hover .wm-ext-inner,
+.wordmark:focus-visible .wm-ext-inner,
+.wordmark.is-expanded .wm-ext-inner {
+  opacity: 1;
+}
+
+.wordmark-page {
+  margin-left: 0.08em;
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+}
+
+.subtitle {
+  margin: 0.6rem 0 0;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  color: var(--muted);
+}
+
+.links {
+  margin-top: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.link-item {
+  display: inline-block;
+  font-size: clamp(1.1rem, 3vw, 1.35rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: color 0.15s ease, transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (hover: hover) {
+  .link-item:hover {
+    color: var(--muted);
+    transform: scale(1.05);
+  }
+}
+
+.link-item:active {
+  color: var(--muted);
+  transform: scale(0.98);
+}
+
+.link-item--muted {
+  color: var(--muted);
+  cursor: default;
+}
+
+.statement {
+  margin-top: 2rem;
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.statement--meow {
+  display: inline-flex;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  animation: meowPop 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.meow-char {
+  display: inline-block;
+  animation: meowFloat 1.8s ease-in-out infinite;
+}
+
+@keyframes meowFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-0.18em);
+  }
+}
+
+@keyframes meowPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.footer {
   margin-top: 3rem;
-  color: #555;
   font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: #555555;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wm-ext,
+  .wm-ext-inner,
+  .link-item,
+  .statement--meow,
+  .meow-char {
+    transition: none;
+    animation: none;
+  }
 }
